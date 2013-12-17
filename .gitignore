@@ -1,0 +1,6 @@
+.Rapp.history
+.Rproj*
+*.rda
+integritate_raw.txt
+integritate_full_table*
+README.pdf
