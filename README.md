@@ -61,8 +61,8 @@ The data are not included in the repository, but you can [open an issue](issues)
 Backup line for the extended repo (code, processed dataset, figures):
 
     zip(paste0("integritate_", Sys.Date(), ".zip"),    # file name
-        files = dir(pattern = ".r$|.rda$|README|fig"))
+        files = dir(pattern = ".r$|.rda$|.Rproj$|README|fig"))
 
 From a sample of slightly below 2,000 files filled in by employees of the Ministry of External Affairs, average PDF file size is about 1.7 MB.
 
-> > _Last edited 2013-12-16_
+> _Last edited 2013-12-16_
