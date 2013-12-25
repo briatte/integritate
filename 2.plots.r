@@ -81,6 +81,10 @@ table(data$Categorie)
 categories = names(table(data$Categorie)[table(data$Categorie) > min_category])
 data = subset(data, Categorie %in% categories)
 
+# remove categories 24 (Central Election Bureau) and 25 (Uncategorized)
+
+data = subset(data, !Categorie_Number %in% 24:25)
+
 # replace subCatInst numbers by subcategory names
 # TODO: write list of subcategories, full and abbreviated
 # ...
@@ -128,8 +132,12 @@ ymax = y [ which( y == max(y)) ]
 
 # plot the performance of quantile cutpoints against full corpus
 
-qplot(x, y, geom = "line") + theme_grey(10) + 
+fig0a = qplot(x, y, geom = "line") + theme_grey(10) + 
   geom_point(aes(y = ymax, x = xmax), color = "red")
+fig0a
+
+ggsave("fig0a_cutpoints.png", fig0a, width = 10, height = 10)
+cat("Fig. 0a saved\n")
 
 xmax # optimal quantile cutpoint
 ymax / nrow(data) # percentage of successfully classified items
@@ -142,8 +150,12 @@ data$Functie_Basic = unlist(lapply(l, function(x) {
 
 # plot the data by mutually exclusive job title qualificative
 
-qplot(data = data, x = Year, group = Functie_Basic, 
+fig0b = qplot(data = data, x = Year, group = Functie_Basic, 
       fill = Functie_Basic, position = "stack", geom = "bar")
+fig0b
+
+ggsave("fig0b_classifier.png", fig0b, width = 10, height = 10)
+cat("Fig. 0b saved\n")
 
 #
 # PLOTS

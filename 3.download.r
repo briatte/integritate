@@ -21,11 +21,11 @@ dir.create("docs")               # main data folder
 sapply(unique(path), dir.create) # subfolders to keep files organized
 
 # subset to Ministry of Foreign Policy (for testing purposes)
-urls = urls[ grepl("/8_", path )])
-path = path[ grepl("/8_", path )])
+urls = urls[ grepl("/8_", path )]
+path = path[ grepl("/8_", path )]
 
 length(urls)
-length(urls) == length(path)) # check
+length(urls) == length(path) # check
 
 # download files
 for(i in length(urls):1) {

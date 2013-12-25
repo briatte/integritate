@@ -11,7 +11,7 @@ sample = FALSE
 # set threshold to exclude categories with many pages
 # (keep at 9,000 to exclude the two largest categories, Election Bureau and NAs)
 
-threshold = 10^4 # set at 10^4 to scrape everything
+threshold = 9000 # set at 10^4 to scrape everything
 
 # complete set of institutional categories (CatInst)
 
@@ -87,7 +87,7 @@ page.number = list(
   c(4, 54, 232),               # 22
   c(16, 168, 58),              # 23
   c(4, 9339),                  # 24 (very large -- Central Election Bureau)
-  c(9881), # 25 (very large -- 'Unknown' institution, ~ 80% of all pages)
+  c(9881), # 25 (very large -- 'Unknown' institution, ~ 20% of all pages)
   c(11),   # 26 (small -- presidency)
   c(119),  # 27
   c(23),   # 28

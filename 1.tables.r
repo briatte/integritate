@@ -48,34 +48,47 @@ for(group in 1:length(page.groups)) { # loop over categories
                    post)
 
         cat("  ", x, ":", u, "\n")
+
+        t = data.frame()
         y = try(htmlParse(u), silent = TRUE)
+
         if ("try-error" %in% class(y)) {
-          cat("htmlParse issue on link", x, "\n")
+          cat("htmlParse error: failed to parse\n")
           print(y)
-          t = data.frame()
         }
-        else if (is.null(class(y))) {
-          cat("htmlParse issue on link", x, "\n")
+        else if (is.null(class(y)) | !length(y)) {
+          cat("htmlParse error: null data\n")
           print(y)
-          t = data.frame()
         }
         else {
           # links
-          l = xpathSApply(y, "//table/tr/td/a/@href")
-          l = paste0(url, l[grepl(".pdf$", l)])
-
-          # table
-          t = readHTMLTable(y)[[1]]
-          t = subset(t, V8 == "Vezi document")
-
-          # merge
-          if(nrow(t) == length(l)) {
-            t$V8 = l
+          l = try(xpathSApply(y, "//table/tr/td/a/@href"))
+          if ("try-error" %in% class(l)) {
+            cat("xpathSApply error\n")
+            print(l)
           }
           else {
-            cat("Could not paste URLs into table:\n")
-            print(t)
-            t$V8 = NA
+            l = paste0(url, l[grepl(".pdf$", l)])
+
+            # table
+            t = try(readHTMLTable(y)[[1]])
+            if ("try-error" %in% class(t) | dim(t)[2] < 8) {
+                cat("readHTMLTable error: invalid table\n")
+                print(t)
+                t = data.frame()
+            }
+            else {
+              t = subset(t, V8 == "Vezi document")
+              # merge
+              if(nrow(t) == length(l)) {
+                t$V8 = l
+              }
+              else {
+                cat("Dimension mismatch, saving table only\n")
+                print(t)
+                t$V8 = NA
+              }            
+            }
           }
         }
         return(t)
@@ -95,6 +108,7 @@ for(group in 1:length(page.groups)) { # loop over categories
 # get list of full tables
 
 files = dir(pattern = "full_table")
+cat("\nMerging", length(files), "files to integritate_raw...\n")
 
 # read and merge datasets
 
