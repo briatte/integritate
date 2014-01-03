@@ -9,13 +9,16 @@
 # If each file takes 5 seconds, a full download will take around 40 hours.
 
 load("integritate.rda")
+str(data)
 
 # filenames
 urls = as.character(data$URL)
 urls = gsub("\\s", "%20", urls)
+urls = paste0("http://declaratii.integritate.eu/UserFiles/PDFfiles/", urls)
+urls
 
 # folder paths
-path = paste0("docs/", paste(data$Categorie, data$Subcategoria, sep = "_"))
+path = paste0("docs/", paste(data$Categorie_Number, data$Subcategoria, sep = "_"))
 
 dir.create("docs")               # main data folder
 sapply(unique(path), dir.create) # subfolders to keep files organized
