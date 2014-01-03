@@ -107,7 +107,7 @@ for(group in 1:length(page.groups)) { # loop over categories
 
 # get list of full tables
 
-files = dir(pattern = "full_table")
+files = dir(pattern = "full_table_[0-9]+_[0-9]+.txt$")
 cat("\nMerging", length(files), "files to integritate_raw...\n")
 
 # read and merge datasets
@@ -115,7 +115,28 @@ cat("\nMerging", length(files), "files to integritate_raw...\n")
 data = lapply(files, read.table, sep = " ", header = TRUE)
 data = rbind.fill(data)
 
-cat("\nPreprocessed dataset:\n") # overview of links index
+#
+# VARIABLES (saved to integritate.rda after plotting)
+#
+# - Categorie        : category (full text) 
+# - Categorie_Number : category (numeric)
+# - Categorie_Abbr   : category (abbreviated)
+# - Subcategoria     : subcategory, numeric
+# - job title   : full text and basic classification from most common terms
+# - Data (date)        : full ymd, split to years, months and weekdays for plots
+# - Localitate (location)    : district and town
+# - Tip (type)        : either avere or interese
+# - URL to file : HTTP link to PDF, average file size ~ 1.7 MB
+#
+
+data$Tip = ifelse(grepl("avere", data$Tip), "Avere", "Interese")
+data$Tip[ is.na(data$Tip) ] = NA
+data$Tip = factor(data$Tip)
+
+data$URL = gsub("http://declaratii.integritate.eu/UserFiles/PDFfiles/", 
+                "", data$URL)
+
+cat("\nPreprocessed dataset (integritate_raw.txt):\n") # overview of links index
 str(data)
 
 # save to plain text table, space-separated, quoted values

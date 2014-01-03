@@ -13,46 +13,53 @@ library(scales)
 # SETTINGS
 #
 
-# subset to categories with more than x counts (default: 100, drops Eur. Parl.)
+# subset to categories with more than x links
 min_category = 100
 
-# subset to years with more than x counts (default: 4,000, keeps 2008-2013)
+# subset to years with more than x links
 min_year = 4000
 
 #
-# VARIABLES (saved to integritate.rda after plotting)
+# category full names
 #
-# - category    : full text, numeric and abbreviated
-# - subcategory : numeric
-# - job title   : full text and basic classification from most common terms
-# - date        : full ymd, split to years, months and weekdays for plots
-# - location    : district and town
-# - type        : either avere or interese
-# - URL to file : HTTP link to PDF, average file size ~ 1.7 MB
-#
+data$Categorie_Number = data$Categorie      # keep original numeric id
+data$Categorie[ data$Categorie == 35] = 33  # fix last category number
 
-# type of declaration
-data$Declaratie = ifelse(grepl("avere", data$Tip), "Avere", "Interese")
-data$Declaratie[ is.na(data$Tip) ] = NA
-data$Declaratie = factor(data$Declaratie)
+Categorie = c(
+  "Autoritati publice",                      # 1
+  "Alte Institutii",                         # 2
+  "Autoritati autonome",                     # 3
+  "Companii nationale",                      # 4
+  "Consiliul Superior al Magistraturii",     # 5
+  "Guvernul Romaniei",                       # 6
+  "Ministerul Administratiei si Internelor", # 7
+  "Ministerul Afacerilor Externe",           # 8
+  "Ministerul Agriculturii si Dezvoltarii Rurale",              # 9
+  "Ministerul Apararii Nationale",                              # 10
+  "Ministerul Comunicatiilor si Societatii Informationale",     # 11
+  "Ministerul Culturii si Patrimoniului National",              # 12
+  "Ministerul Dezvoltarii Regionale si Turismului",             # 13
+  "Ministerul Economiei, Comertului si Mediului de Afaceri",    # 14
+  "Ministerul Educatiei, Cercetarii, Tineretului si Sportului", # 15
+  "Ministerul Finantelor Publice",          # 16
+  "Ministerul Justitiei",                   # 17
+  "Ministerul Mediului si Padurilor",       # 18
+  "Ministerul Muncii, Familiei si Protectiei Sociale", # 19
+  "Ministerul Public - Parchete",           # 20
+  "Ministerul Sanatatii",                   # 21
+  "Ministerul Transporturilor si Infrastructurii", # 22
+  "Parlamentul Romaniei",                   # 23
+  "Biroul Electoral Central",               # 24
+  "Institutie completata necorespunzator",  # 25 (Unknown)
+  "Presedentia Romaniei",                   # 26
+  "Institutii publice",                     # 27
+  "Banca Nationala a Romaniei",             # 28
+  "Banci la care statul este actionar majoritar sau semnificativ", # 29
+  "Autoritatea pentru Valorificarea Activelor Statului",           # 30
+  "Federatii si confederatii sindicale",    # 31
+  "Parlamentul European",                   # 32
+  "Ministerul Afacerilor Europene")         # 35 (33 in vector)
 
-# replace Categorie numbers by names
-data$Categorie_Number = data$Categorie
-Categorie = c("Autoritati publice", "Alte Institutii", "Autoritati autonome", 
-              "Companii nationale", "Consiliul Superior al Magistraturii", 
-              "Guvernul Romaniei", "Ministerul Administratiei si Internelor", 
-              "Ministerul Afacerilor Externe", "Ministerul Agriculturii si Dezvoltarii Rurale", 
-              "Ministerul Apararii Nationale", "Ministerul Comunicatiilor si Societatii Informationale", 
-              "Ministerul Culturii si Patrimoniului National", "Ministerul Dezvoltarii Regionale si Turismului", 
-              "Ministerul Economiei, Comertului si Mediului de Afaceri", "Ministerul Educatiei, Cercetarii, Tineretului si Sportului", 
-              "Ministerul Finantelor Publice", "Ministerul Justitiei", "Ministerul Mediului si Padurilor", 
-              "Ministerul Muncii, Familiei si Protectiei Sociale", "Ministerul Public - Parchete", 
-              "Ministerul Sanatatii", "Ministerul Transporturilor si Infrastructurii", 
-              "Parlamentul Romaniei", "Biroul Electoral Central", "Institutie completata necorespunzator", 
-              "Presedentia Romaniei", "Institutii publice", "Banca Nationala a Romaniei", 
-              "Banci la care statul este actionar majoritar sau semnificativ", 
-              "Autoritatea pentru Valorificarea Activelor Statului", "Federatii si confederatii sindicale", 
-              "Parlamentul European", "Ministerul Afacerilor Europene")
 Categorie_Abbr = c("Autor publice", "Alte Instit", "Autor auton", 
                    "Companii nat", "Cons S Magistr", 
                    "Guvernul Rom", "M Admin Intern", 
@@ -68,7 +75,6 @@ Categorie_Abbr = c("Autor publice", "Alte Instit", "Autor auton",
                    "Banci actionar", 
                    "Autor Activ Stat", "Fede sindic", 
                    "Parlament Eur", "M Afac Eur")
-data$Categorie[ data$Categorie == 35] = 33
 
 data$Categorie_Abbr = Categorie_Abbr[data$Categorie]
 table(data$Categorie_Abbr)
@@ -76,7 +82,8 @@ table(data$Categorie_Abbr)
 data$Categorie = Categorie[data$Categorie]
 table(data$Categorie)
 
-# subset to categories with 100+ files (removes European Parliament, n = 8)
+# subset to categories with 100+ files
+# drops category 32, European Parliament (n = 8)
 
 categories = names(table(data$Categorie)[table(data$Categorie) > min_category])
 data = subset(data, Categorie %in% categories)
@@ -190,7 +197,7 @@ cat("Fig. 1 saved\n")
 # Fig. 2
 # plot by year
 
-fig2 = qplot(data = data, x = Year, group = Declaratie, fill = Declaratie, 
+fig2 = qplot(data = data, x = Year, group = Tip, fill = Tip, 
              position = "stack", geom = "bar") + 
   scale_x_discrete(breaks = years[ seq(1, 
     length(years), by=2) ]) + # label odd years

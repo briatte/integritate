@@ -1,10 +1,10 @@
 # README
 
-R scripts to scrape, download and plot links from the Romanian [National Integrity Agency](http://integritate.eu/). The data come from a bit everywhere:
+R scripts to scrape, download and plot metadata for declarations filed with the Romanian [National Integrity Agency](http://integritate.eu/). Half of the data comes from four administrative bodies, including local agencies. Geocoding the addresses with Google Maps returned this:
 
 ![](fig9_geo.png)
 
-The current dataset holds _N_ = 1,411,736 links for 30 institutions from 2008 to 2013:
+The preprocessed dataset holds _N_ = 1,406,790 links for 31 institutions. The final dataset and the plots exclude declarations from the European Parliament or from before 2008, both of which have very low counts. This breakdown shows how many declarations were filed in each institution, and when:
 
 ![](fig4_week.png)
 
@@ -12,23 +12,19 @@ The data are not included in the repository, but you can [open an issue](issues)
 
 ## HOWTO
 
-The main entry point is `0.scrape.r`. Make sure to review the opening parameters. This will trigger `1.tables.r` to download the tables, and `2.plots.r` to visualize the aggregated data. The download loop in `3.download.r` for the PDF files should be run separately.
+The main entry point is `0.scrape.r`. The opening parameters of the script will scrape categories `1:23`, `26:32` and `35`. The missing categories are the Central Election Bureau (_n_ ~ 9,000 pages) and uncategorized documents (_n_ ~ 9,000 pages), which both fail to scrape due to server-side issues with calling high page number values.
 
-All download functions are wrapped in failsafe `try()` functions and will skip existing files to protect data from previous scrapes. The PDF download loop will also sleep a few seconds between each file.
+Running `0.scrape.r` will run `1.tables.r` to download the tables and `2.plots.r` to visualize the aggregated data. The download loop in `3.download.r` is for the PDF files and should be run separately. From a sample of slightly below 2,000 declarations from the Ministry of External Affairs, average PDF file size is about 1.7 MB.
 
-The scripts were tested by scraping over 1.5 million links for categories `1:23`, `26:32` and `35`. The missing categories are the Central Election Bureau (_n_ ~ 9,000 pages) and uncategorized documents (_n_ ~ 9,000 pages).
+To get a breakdown of links by institution:
 
-Breakdowns by origin and type:
+```r
+load("integritate.rda")
+str(data)
+df = aggregate(URL ~ Categorie, length, data = data)
+df[order(df$URL, decreasing = TRUE), ]
+```
 
-![](fig1_county.png)
-
-![](fig2_type.png)
-
-Breakdown by institution: 
-
-    > load("integritate.rda")
-    > df = aggregate(URL ~ Categorie, length, data = data)
-    > df[order(df$URL, decreasing = TRUE), ]
                                                         Categorie    URL
                           Ministerul Administratiei si Internelor 365329
                                                Autoritati publice 358892
@@ -61,17 +57,8 @@ Breakdown by institution:
                                              Presedentia Romaniei    524
     Banci la care statul este actionar majoritar sau semnificativ    106
 
-The breakdowns exclude declarations from the European Parliament, or from before 2008. In both cases, the number of links is very low and the data are probably not representative.
+The script `4.elections.r` will produce a separate dataset for the [declarations of candidates to the 2012 legislative election](http://declaratii.integritate.eu/home/navigare/alegeri-2012.aspx), which is much quicker to parse than most of the other institutions handled by the main scraper.
 
-The script `4.elections.r` will produce a separate dataset for the [declarations of candidates to the 2012 legislative election](http://declaratii.integritate.eu/home/navigare/alegeri-2012.aspx).
+All download functions are wrapped in failsafe `try()` functions and will skip existing files to protect data from previous scrapes. The PDF download loop will also sleep a few seconds between each file. Scraping the links returned very few errors (10 out of over 6,000 links on table `7_61`, for example).
 
-## NOTES
-
-Backup line for the extended repo (code, processed dataset, figures):
-
-    zip(paste0("integritate_", Sys.Date(), ".zip"),    # file name
-        files = dir(pattern = ".r$|.rda$|.Rproj$|README|fig"))
-
-From a sample of slightly below 2,000 files filled in by employees of the Ministry of External Affairs, average PDF file size is about 1.7 MB.
-
-> _Last edited 2013-12-25_
+> _Last edited 2014-01-03_

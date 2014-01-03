@@ -9,9 +9,9 @@
 sample = FALSE
 
 # set threshold to exclude categories with many pages
-# (keep at 9,000 to exclude the two largest categories, Election Bureau and NAs)
+# (keep at 9,000 to exclude the two largest categories, 24 and 25)
 
-threshold = 9000 # set at 10^4 to scrape everything
+threshold = 9000 # set at 10^4 to try to scrape everything (fails on 24 and 25)
 
 # complete set of institutional categories (CatInst)
 
