@@ -18,7 +18,7 @@ Running `0.scrape.r` will run `1.tables.r` to download the tables and `2.plots.r
 
 To get a breakdown of links by institution:
 
-```r
+```S
 load("integritate.rda")
 str(data)
 df = aggregate(URL ~ Categorie, length, data = data)
