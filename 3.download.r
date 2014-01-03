@@ -3,10 +3,10 @@
 # 3. download PDF declaration files from collected links
 #
 
-# WARNING: the script tries to download ALL links for one or more categories.
-# My estimate on 2,000 files from the Ministry of Foreign Policy is that the
-# mean file size is at 1.7 MB, so that Ministry alone is 28,000 docs ~ 48 GB.
-# If each file takes 5 seconds, a full download will take around 40 hours.
+# WARNING: the script is parametered at lines 26-27 to download links for the
+# Ministry of Foreign Policy and Ministry of Communication. There are around
+# 30 files per page, and the average file size is at 1.7 MB, which amounts to
+# several GB of data per institution.
 
 load("integritate.rda")
 str(data)
@@ -15,7 +15,6 @@ str(data)
 urls = as.character(data$URL)
 urls = gsub("\\s", "%20", urls)
 urls = paste0("http://declaratii.integritate.eu/UserFiles/PDFfiles/", urls)
-urls
 
 # folder paths
 path = paste0("docs/", paste(data$Categorie_Number, data$Subcategoria, sep = "_"))
@@ -23,9 +22,9 @@ path = paste0("docs/", paste(data$Categorie_Number, data$Subcategoria, sep = "_"
 dir.create("docs")               # main data folder
 sapply(unique(path), dir.create) # subfolders to keep files organized
 
-# subset to Ministry of Foreign Policy (for testing purposes)
-urls = urls[ grepl("/8_", path )]
-path = path[ grepl("/8_", path )]
+# subset to Ministry of Foreign Policy and Ministry of Communication (testing)
+urls = urls[ grepl("/(8|11)_", path )]
+path = path[ grepl("/(8|11)_", path )]
 
 length(urls)
 length(urls) == length(path) # check

@@ -4,7 +4,7 @@ R scripts to scrape, download and plot metadata for declarations filed with the 
 
 ![](fig9_geo.png)
 
-The preprocessed dataset holds _N_ = 1,406,790 links for 31 institutions. The final dataset and the plots exclude declarations from the European Parliament or from before 2008, both of which have very low counts. This breakdown shows how many declarations were filed in each institution, and when:
+The preprocessed dataset holds _N_ = 1,406,789 links for 31 institutions. The final dataset and the plots exclude declarations from the European Parliament or from before 2008, both of which have very low counts. This breakdown shows how many declarations were filed in each institution, and when:
 
 ![](fig4_week.png)
 
@@ -14,7 +14,7 @@ The data are not included in the repository, but you can [open an issue](issues)
 
 The main entry point is `0.scrape.r`. The opening parameters of the script will scrape categories `1:23`, `26:32` and `35`. The missing categories are the Central Election Bureau (_n_ ~ 9,000 pages) and uncategorized documents (_n_ ~ 9,000 pages), which both fail to scrape due to server-side issues with calling high page number values.
 
-Running `0.scrape.r` will run `1.tables.r` to download the tables and `2.plots.r` to visualize the aggregated data. The download loop in `3.download.r` is for the PDF files and should be run separately. From a sample of slightly below 2,000 declarations from the Ministry of External Affairs, average PDF file size is about 1.7 MB.
+Running `0.scrape.r` will run `1.tables.r` to download the tables and `2.plots.r` to visualize the aggregated data. The download loop in `3.download.r` is for the PDF files and should be run separately. From a sample of 4,500 declarations from the Ministry of External Affairs and Ministry of Communication, average PDF file size is 1.7 MB.
 
 To get a breakdown of links by institution:
 
