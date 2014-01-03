@@ -1,9 +1,11 @@
 .Rapp.history
+.Rproj
 .Rproj*
 *.rda
 integritate_raw*
 integritate_full_table*
-scrape*
+scrape*.log
 README.pdf
 ggmap*
 fig0*
+.gitignore
