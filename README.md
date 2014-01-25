@@ -1,6 +1,6 @@
 # README
 
-R scripts to scrape and plot metadata from declarations filed with the Romanian [National Integrity Agency](http://integritate.eu/). Half of the data comes from four administrative bodies, one of which is local government. Geocoding the addresses with Google Maps returned this:
+R scripts to scrape and plot metadata from 1.4 million declarations filed with the Romanian [National Integrity Agency](http://integritate.eu/). Half of the data comes from four administrative bodies, one of which is local government. Geocoding the addresses with Google Maps returned 1,745 locations:
 
 ![](fig9_geo.png)
 
@@ -8,7 +8,7 @@ The preprocessed dataset holds _N_ = 1,406,789 links for 31 institutions. The fi
 
 ![](fig4_week.png)
 
-The data are not included in the repository, but you can [open an issue](issues) to request bits of it. Otherwise, just follow the `HOWTO` section below to run the scraper locally, replicate the plots, and download your own sample of declarations.
+The data are not included in the repository, but you can [open an issue](issues) to request bits of it if you like. Otherwise, just follow the `HOWTO` section below to run the scraper locally, replicate the plots, and download your own sample of declarations. Let us know if you code any of it!
 
 ## HOWTO
 
@@ -86,7 +86,7 @@ df[order(df$URL, decreasing = TRUE), ]
                                              Presedentia Romaniei    524
     Banci la care statul este actionar majoritar sau semnificativ    106
 
-The script `download.candidates.r` will produce a separate dataset for the [declarations of candidates to the 2012 legislative election](http://declaratii.integritate.eu/home/navigare/alegeri-2012.aspx), which is much quicker to parse than most of the other institutions handled by the main scraper.
+The script `download.candidates.r` will produce a separate dataset for the [declarations of candidates to the 2012 legislative election](http://declaratii.integritate.eu/home/navigare/alegeri-2012.aspx), which are much quicker to parse than almost all other institutions handled by the main scraper.
 
 All download functions are wrapped in failsafe `try()` functions and will skip existing files to protect data from previous scrapes. Scraping the links consistently returned [less than 0.01% errors](https://gist.github.com/briatte/8623901) in our data collection phase of late 2013.
 
