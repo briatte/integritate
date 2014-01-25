@@ -39,13 +39,14 @@ download.files = function(data, categorie = NULL, tip = c("da", "di"), list = TR
   stopifnot(length(urls) == length(path))
   
   # print download info
+  message(paste(length(urls), "elements, approx. size",
+                (length(urls[ grepl("/DI_", urls) ]) + 2.5 * length(urls[ grepl("/DA_", urls) ])) / 10^3, "GB",
+                table(file.exists(paste0(path, "/", gsub("%20", " ", gsub("(.*)//D", "D", urls)))))[1],
+                "to download"))
+
   if(list) {
 
-    message(paste(length(urls), "elements, approx. size",
-                  (length(urls[ grepl("/DI_", urls) ]) + 2.5 * length(urls[ grepl("/DA_", urls) ])) / 10^3, "GB",
-                  table(file.exists(paste0(path, "/", gsub("%20", " ", gsub("(.*)//D", "D", urls)))))[1],
-                  "to download"))
-    return(urls)
+    return(message("Set list = FALSE to (slowly) download the files."))
 
   }
   else {
