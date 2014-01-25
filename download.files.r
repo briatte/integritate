@@ -1,14 +1,11 @@
 
 #
-# 3. download PDF declaration files from collected links
+# download PDF declaration files from collected links
 #
 
 # sample ~ 2,000 files from Foreign Policy (8)
 # average DA file size:   2.5 MB
 # average DI file size:   1.0 MB
-
-load("integritate.rda")
-str(data)
 
 # basic download function
 download.files = function(data, categorie = NULL, tip = c("da", "di"), list = TRUE, sleep = 3) {
@@ -82,16 +79,5 @@ download.files = function(data, categorie = NULL, tip = c("da", "di"), list = TR
   } # could be parallelized; do you have a multicore computer? i'm on a single CPU
 
 }
-
-# examples: 
-
-# count DIs in every Ministry
-system.time(download.files(data, unique(data$Categorie_Number[ grepl("Ministerul", data$Categorie)]), tip = "di"))
-
-# count DIs in the Ministries of Foreign Policy (8) and Communication (11)
-head(download.files(data, c(8, 11), tip = "di"))
-
-# download DIs in the Ministry of Foreign Policy
-download.files(data, 8, tip = "di", list = FALSE)
 
 # rollin'

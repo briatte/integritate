@@ -143,7 +143,7 @@ fig0a = qplot(x, y, geom = "line") + theme_grey(10) +
   geom_point(aes(y = ymax, x = xmax), color = "red")
 fig0a
 
-ggsave("fig0a_cutpoints.png", fig0a, width = 10, height = 10)
+ggsave(“plots/fig0a_cutpoints.png", fig0a, width = 10, height = 10)
 cat("Fig. 0a saved\n")
 
 xmax # optimal quantile cutpoint
@@ -161,7 +161,7 @@ fig0b = qplot(data = data, x = Year, group = Functie_Basic,
       fill = Functie_Basic, position = "stack", geom = "bar")
 fig0b
 
-ggsave("fig0b_classifier.png", fig0b, width = 10, height = 10)
+ggsave(“plots/fig0b_classifier.png", fig0b, width = 10, height = 10)
 cat("Fig. 0b saved\n")
 
 #
@@ -191,7 +191,7 @@ fig1 = qplot(data = data, x = Year, group = County, fill = County,
   labs(x = NULL, y = "Number of links\n")
 fig1
 
-ggsave("fig1_county.png", fig1, width = 10, height = 10)
+ggsave(“plots/fig1_county.png", fig1, width = 10, height = 10)
 cat("Fig. 1 saved\n")
 
 # Fig. 2
@@ -208,7 +208,7 @@ fig2 = qplot(data = data, x = Year, group = Tip, fill = Tip,
   labs(x = NULL, y = "Number of links\n")
 fig2
 
-ggsave("fig2_type.png", fig2, width = 10, height = 10)
+ggsave(“plots/fig2_type.png", fig2, width = 10, height = 10)
 cat("Fig. 2 saved\n")
 
 # Fig. 3
@@ -225,7 +225,7 @@ fig3 = qplot(data = mt, group = Functie_Basic, fill = Functie_Basic,
   labs(x = NULL, y = "Number of links\n")
 fig3
 
-ggsave("fig3_month.png", fig3, width = 10, height = 10)
+ggsave(“plots/fig3_month.png", fig3, width = 10, height = 10)
 cat("Fig. 3 saved\n")
 
 # Fig. 4
@@ -246,7 +246,7 @@ fig4 = qplot(data = jw, group = Categorie_Abbr, fill = Categorie_Abbr,
   theme_grey(10) + labs(y = "Number of links\n", x = NULL)
 fig4
 
-ggsave("fig4_week.png", fig4, width = 16, height = 8)
+ggsave(“plots/fig4_week.png", fig4, width = 16, height = 8)
 cat("Fig. 4 saved\n")
 
 # Fig. 5
@@ -261,7 +261,7 @@ fig5 = qplot(data = data, x = wday(data$Data, label = TRUE, abbr = TRUE),
   labs(x = NULL, y = "Number of links\n")
 fig5
 
-ggsave("fig5_weekday.png", fig5, width = 7, height = 4)
+ggsave(“plots/fig5_weekday.png", fig5, width = 7, height = 4)
 cat("Fig. 5 saved\n")
 
 # Fig. 6
@@ -277,7 +277,7 @@ fig6 = qplot(data = yd, group = Categorie_Abbr, color = Categorie_Abbr,
   labs(y = "Number of links, log-10 scale\n", x = NULL)
 fig6
 
-ggsave("fig6_log10.png", fig6, width = 10, height = 10)
+ggsave(“plots/fig6_log10.png", fig6, width = 10, height = 10)
 cat("Fig. 6 saved\n")
 
 # Fig. 7 and 8
@@ -293,7 +293,7 @@ fig7 = qplot(data = nf, x = Categorie_Abbr, y = Functie_Basic,
   labs(y = "Naive job title classifier\n", x = "\nAdministration")
 fig7
 
-ggsave("fig7_heatmap0.png", fig7, width = 14, height = 8)
+ggsave(“plots/fig7_heatmap0.png", fig7, width = 14, height = 8)
 cat("Fig. 7 saved\n")
 
 mf = subset(cf, !is.na(Functie_Basic) & grepl("^M ", Categorie_Abbr))  # ministries
@@ -306,7 +306,7 @@ fig8 = qplot(data = mf, x = Categorie_Abbr, y = Functie_Basic,
   labs(y = "Naive job title classifier\n", x = "\nMinistry")
 fig8
 
-ggsave("fig8_heatmap1.png", fig8, width = 14, height = 8)
+ggsave(“plots/fig8_heatmap1.png", fig8, width = 14, height = 8)
 cat("Fig. 8 saved\n")
 
 # Fig. 9
@@ -342,7 +342,7 @@ fig9 = ggmap(geo_rom) +
   labs(y = NULL, x = NULL)
 fig9
 
-ggsave("fig9_geo.png", fig9, width = 7, height = 7)
+ggsave(“plots/fig9_geo.png", fig9, width = 7, height = 7)
 cat("Fig. 9 saved\n")
 
 #
