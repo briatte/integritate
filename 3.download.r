@@ -83,12 +83,15 @@ download.files = function(data, categorie = NULL, tip = c("da", "di"), list = TR
 
 }
 
-# example: 
+# examples: 
+
+# count DIs in every Ministry
+system.time(download.files(data, unique(data$Categorie_Number[ grepl("Ministerul", data$Categorie)]), tip = "di"))
 
 # count DIs in the Ministries of Foreign Policy (8) and Communication (11)
 head(download.files(data, c(8, 11), tip = "di"))
 
-# count DIs in every Ministry
-head(download.files(data, unique(data$Categorie_Number[ grepl("Ministerul", data$Categorie)]), tip = "di"))
+# download DIs in the Ministry of Foreign Policy
+download.files(data, 8, tip = "di", list = FALSE)
 
 # rollin'
