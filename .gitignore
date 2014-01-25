@@ -1,5 +1,6 @@
 *.rda
 *.zip
+*.pdf
 
 scrape*
 ggmap*
@@ -10,3 +11,4 @@ fig0*
 .Rapp.history
 .Rproj
 .Rproj*
+.Rproj.user
