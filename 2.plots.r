@@ -327,7 +327,7 @@ if(!file.exists("geocodes.rda")) {
 load("geocodes.rda")
 data = merge(data, geocodes, by = "Localitate")
 
-geo_rom = get_map(location = "romania", zoom = 7, color = "bw", source = "google")
+geo_rom = get_map(location = "romania", zoom = 6, color = "bw", source = "google")
 geo_loc = ddply(data, .(Localitate), summarise, lon = mean(lon), lat = mean(lat), n = length(URL))
 
 fig9 = ggmap(geo_rom) + 
