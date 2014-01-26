@@ -2,13 +2,13 @@
 
 R scripts to scrape and plot metadata from 1.4 million declarations filed with the Romanian [National Integrity Agency](http://integritate.eu/). Half of the data comes from four administrative bodies, one of which is local government. Geocoding the addresses with Google Maps returned 1,745 locations:
 
-![](fig9_geo.png)
+![](plots/fig9_geo.png)
 
 The preprocessed dataset holds _N_ = 1,406,789 links for 31 institutions. The final dataset and the plots exclude declarations from the European Parliament or from before 2008, both of which have very low counts. This breakdown shows how many declarations were filed in each institution, and when:
 
-![](fig4_week.png)
+![](plots/fig4_week.png)
 
-The data are not included in the repository, but you can [open an issue](issues) to request bits of it if you like. Otherwise, just follow the `HOWTO` section below to run the scraper locally, replicate the plots, and download your own sample of declarations. Let us know if you code any of it!
+The data are not included in the repository, but you can [open an issue](issues) to request bits of it, or just follow the `HOWTO` section below to run the scraper locally, replicate the plots, and download your own sample of declarations. __Let us know if you want to help coding any of the raw data!__
 
 ## HOWTO
 
