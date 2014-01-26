@@ -12,6 +12,11 @@ The data are not included in the repository, but you can [open an issue](issues)
 
 ## HOWTO
 
+```S
+source("data.scraper.r")
+source("data.plots.r")
+```
+
 1. The first entry point is the scraper, which runs in two consecutive scripts (run each of them with `source()`):
 
 	1. `data.scraper.r` will download links for declarations from all institutions except for the two largest, which return server errors.

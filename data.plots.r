@@ -1,6 +1,6 @@
 
 #
-# 2. plot the data that comes with the links (date, institution, etc.)
+# plot the data that comes with the links (date, institution, etc.)
 #
 
 library(ggmap)
