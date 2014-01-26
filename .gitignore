@@ -9,4 +9,5 @@ demo.r
 .Rapp.history
 .Rproj
 .Rproj*
+*.Rproj
 .Rproj.user
