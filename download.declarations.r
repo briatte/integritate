@@ -53,31 +53,31 @@ download.files = function(data, categorie = NULL, tip = c("da", "di"), list = TR
 
     # folder hierarchy: docs/category_subcategory
     # filenames: {DA or DI}_{YYYY-MM-DD}_{FULL NAME}_{UID}.pdf
+
+    # clean filenames
+    file = paste0(path, "/", gsub("%20", " ", gsub("(.*)//D", "D", urls)))
     
     # download files
     for(i in length(urls):1) {
-
-      # clean filename
-      file = paste0(path[i], "/", gsub("%20", " ", gsub("(.*)//D", "D", urls[i])))
   
       # try to download
-      if(file.exists(file)) {
-        cat(i, ": skipped", file, "\n")
+      if(file.exists(file[i])) {
+        cat(i, ": skipped", file[i], "\n")
       }
       else {
-        Sys.sleep(sleep) # should amount to 5 seconds per file
-        y = try(download.file(urls[i], destfile = file, quiet = TRUE,
+        Sys.sleep(sleep) # aim at 5 seconds per file to be safe
+        y = try(download.file(urls[i], destfile = file[i], quiet = TRUE,
                               method = "curl", extra = "--globoff"))
         if(class(y) == "try-error") {
           cat(i, ": failed to download", urls[i], "\n")
         }
         else {
-          cat(i, ": downloaded", file, "\n")
+          cat(i, ": downloaded", file[i], "\n")
         }
       }
     }
 
-  } # could be parallelized; do you have a multicore computer? i'm on a single CPU
+  }
 
 }
 

@@ -95,4 +95,10 @@ The script `download.candidates.r` will produce a separate dataset for the [decl
 
 All download functions are wrapped in failsafe `try()` functions and will skip existing files to protect data from previous scrapes. Scraping the links consistently returned [less than 0.01% errors](https://gist.github.com/briatte/8623901) in our data collection phase of late 2013.
 
+# TODO
+
+* download target institutions
+* code empty declarations
+* code either DA or DI data
+
 > _Last edited 2014-01-25_
