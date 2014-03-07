@@ -173,8 +173,11 @@ stopifnot(all(sapply(page.subcat, length) == sapply(page.number, length)))
 # total number of HTML subcategory pages/tables to scrape (~ 47,500)
 sum(sapply(page.number, sum))
 
-# proportion of uncategorized pages (cat. 25, ~ 10,000 pages, 20% of total)
-page.number[[25]][1] / sum(sapply(page.number, sum))
+# out-of-reach pages (cat. 24 + 25, n ~ 20,000 ~ 20% of total)
+sum(page.totals[24:25])
+
+# estimated total links: 47480 * (1.4 * 10^6 / (47480-19224))
+# ~ 2.3 million
 
 # remove longer series
 # note: existing files are skipped later by the download loop
