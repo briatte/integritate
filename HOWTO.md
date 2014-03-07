@@ -24,7 +24,7 @@ By default, `download.files` will just estimate the size of the download; set `l
 
 Example usage:
 
-```{r name, eval = FALSE}
+```{S}
 # load links and download function
 load("integritate.rda")
 source("scripts/download.r")
@@ -42,19 +42,30 @@ system.time(download.files(data, c(11, 35), sleep = 1, tip = "di", list = FALSE)
 ## Replicate the [tables](tables.md)
 
 ```{S}
+# install pander
+library(devtools)
+install_github("Rapporter/pander")
+# rerun tables
 library(knitr)
 knit("tables.Rmd")
 ```
 
-Also requires [`pander`](http://cran.r-project.org/web/packages/pander/) internally. Install the latest version:
+## 3. Run other scripts
 
 ```{S}
-library(devtools)
-install_github("Rapporter/pander")
+source("scripts/candidates.r")
 ```
 
-## Run other scripts
+will produce a separate dataset for the [declarations of candidates to the 2012 legislative election](http://declaratii.integritate.eu/home/navigare/alegeri-2012.aspx), which are much quicker to parse than almost all other institutions handled by the main scraper.
 
-* `scripts/candidates.r` will produce a separate dataset for the [declarations of candidates to the 2012 legislative election](http://declaratii.integritate.eu/home/navigare/alegeri-2012.aspx), which are much quicker to parse than almost all other institutions handled by the main scraper.
-* `scripts/classifier.r` matches job titles to the more frequent ones, in order to simplify the `Functie` variable. The transformation is used to plot heatmaps of job titles in courts and ministries.
-* `scripts/plots.r` produces the map and week distribution of the data shown in this document; there is probably a better map to produce with [embedded plots](http://vita.had.co.nz/papers/embedded-plots.pdf).
+```{S}
+source("scripts/classifier.r")
+```
+
+matches job titles to the more frequent ones, in order to simplify the `Functie` variable. The transformation is used to plot heatmaps of job titles in courts and ministries.
+
+```{S}
+source("scripts/plots.r")
+```
+
+produces the map, which could be improved with [embedded plots](http://vita.had.co.nz/papers/embedded-plots.pdf)

@@ -9,12 +9,3 @@ The replication code scrapes 31 out of 33 institutions and returns _N_ = 1,406,7
 Follow the [`HOWTO`](HOWTO.md) to run the scraper locally, replicate the plots, and download your own sample of declarations. Be careful not to run the download function on the largest institutions (such as local government), unless you have dozens or even hundreds of gigabytes of free disk space.
 
 [issues]: https://github.com/briatte/integritate/issues
-
-# TODO
-
-- [x] download sample institutions
-- [x] write `knitr` tables
-- [ ] code empty declarations
-- [ ] code ministerial DI data
-
-> _Last edited 2014-03-07_
