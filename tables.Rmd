@@ -1,0 +1,52 @@
+# TABLES
+
+```{r load, include = FALSE, echo = FALSE}
+library(pander)
+load("integritate.rda")
+```
+
+## Summary
+
+```{r summary, echo = FALSE, results = 'asis'}
+# show counts
+t = with(data, paste(Categorie_Number, Categorie_Abbr))
+data$Period = as.character(data$Year)
+data$Period[ grepl("2008|2009", data$Period) ] = "2008-2009"
+data$Period[ grepl("2010|2011", data$Period) ] = "2010-2011"
+data$Period[ grepl("2012|2013", data$Period) ] = "2012-2013"
+t = table(t, data$Period)
+t = as.matrix(t)
+t = cbind(t, Total = rowSums(t))
+t = t[order(-t[, "Total"]), ]
+min = grepl("Ministerul|^\\d+\\s+M\\s+", rownames(t))
+# show summary
+pandoc.table(rbind(Ministries = colSums(t[min, ]), 
+                   Others = colSums(t[!min, ]),
+                   Total = colSums(t)),
+             style = "rmarkdown", 
+             big.mark = ",",
+             split.tables = Inf,
+             justify = "left")
+```
+
+## Declarations from ministries
+
+```{r tbl_ministries, echo = FALSE, results = 'asis'}
+# ministries
+pandoc.table(rbind(t[min, ], Total = colSums(t[min, ])), 
+             style = "rmarkdown", 
+             big.mark = ",",
+             split.tables = Inf,
+             justify = "left")
+```
+
+## Declarations from other institutions
+
+```{r tbl_others, echo = FALSE, results = 'asis'}
+# other institutions
+pandoc.table(rbind(t[!min, ], Total = colSums(t[!min, ])), 
+             style = "rmarkdown", 
+             big.mark = ",",
+             split.tables = Inf,
+             justify = "left")
+```

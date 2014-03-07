@@ -5,6 +5,8 @@
 ggmap*
 fig0*
 
+*.html
+
 demo.r
 .Rapp.history
 .Rproj
